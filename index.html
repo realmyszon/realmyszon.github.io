@@ -1,145 +1,63 @@
+```html
 <!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Countdown</title>
+    <title>SIEMA</title>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
+            margin: 0;
             font-family: Arial, sans-serif;
-            background: #0b0d10;
-            color: white;
-            min-height: 100vh;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            overflow-x: hidden;
-        }
-
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background:
-                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 50px 50px;
-            pointer-events: none;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 850px;
+            background: white;
+            color: #222;
             text-align: center;
         }
 
-        .top {
-            font-size: 13px;
-            letter-spacing: 3px;
-            color: #888;
-            margin-bottom: 15px;
+        .container {
+            margin-top: 100px;
         }
 
         h1 {
-            font-size: 42px;
-            margin-bottom: 10px;
+            font-size: 36px;
         }
 
-        .description {
-            color: #777;
-            margin-bottom: 40px;
+        p {
+            color: #666;
         }
 
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 18px;
-            flex-wrap: wrap;
-        }
-
-        .box {
-            background: #11151a;
-            border: 1px solid #252b32;
-            border-radius: 10px;
-            width: 150px;
-            padding: 25px 15px;
-            transition: 0.2s;
-        }
-
-        .box:hover {
-            border-color: #3b82f6;
-            transform: translateY(-3px);
-        }
-
-        .number {
-            font-size: 45px;
+        button {
+            margin-top: 25px;
+            padding: 20px 60px;
+            font-size: 22px;
             font-weight: bold;
-            color: #3b82f6;
-        }
-
-        .label {
-            margin-top: 8px;
-            font-size: 11px;
-            color: #777;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* PRZYCISK */
-
-        .siema-btn {
-            margin-top: 40px;
-            padding: 14px 35px;
-
-            background: #11151a;
+            background: #222;
             color: white;
-
-            border: 1px solid #3b82f6;
+            border: none;
             border-radius: 8px;
-
-            font-size: 16px;
-            font-weight: bold;
-            letter-spacing: 2px;
-
             cursor: pointer;
-            transition: 0.2s;
         }
 
-        .siema-btn:hover {
-            background: #3b82f6;
-            transform: translateY(-2px);
+        button:hover {
+            background: #444;
         }
-
-        /* ZDJĘCIE */
 
         #photo {
             display: none;
-
-            width: 300px;
+            width: 400px;
             max-width: 90%;
-
-            margin: 25px auto 0;
-
-            border-radius: 12px;
-            border: 1px solid #252b32;
-
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            margin: 30px auto 10px;
+            border-radius: 8px;
         }
 
-        .footer {
-            margin-top: 40px;
-            font-size: 12px;
-            color: #555;
+        #caption {
+            display: none;
+            font-size: 20px;
+            font-weight: bold;
+            color: #222;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -148,45 +66,13 @@
 
     <div class="container">
 
-        <div class="top">SYSTEM // COUNTDOWN</div>
+        <h1>Witaj na stronie</h1>
 
-        <h1>Nadchodzi coś nowego</h1>
+        <p>Kliknij przycisk poniżej</p>
 
-        <p class="description">
-            Odliczanie do rozpoczęcia wydarzenia
-        </p>
-
-        <div class="countdown">
-
-            <div class="box">
-                <div class="number" id="days">00</div>
-                <div class="label">Dni</div>
-            </div>
-
-            <div class="box">
-                <div class="number" id="hours">00</div>
-                <div class="label">Godzin</div>
-            </div>
-
-            <div class="box">
-                <div class="number" id="minutes">00</div>
-                <div class="label">Minut</div>
-            </div>
-
-            <div class="box">
-                <div class="number" id="seconds">00</div>
-                <div class="label">Sekund</div>
-            </div>
-
-        </div>
-
-        <!-- PRZYCISK SIEMA -->
-
-        <button class="siema-btn" onclick="showPhoto()">
+        <button onclick="siema()">
             SIEMA
         </button>
-
-        <!-- ZDJĘCIE -->
 
         <img
             id="photo"
@@ -194,78 +80,27 @@
             alt="Zdjęcie"
         >
 
-        <div class="footer">
-            realmyszon.pl
+        <div id="caption">
+            spunjale munjale ej cziki cziki mulaje spunlaje
         </div>
 
     </div>
 
     <script>
-
-        // DATA ODLICZANIA
-        const targetDate = new Date("2026-12-31T23:59:59").getTime();
-
-        function updateCountdown() {
-
-            const now = new Date().getTime();
-            const difference = targetDate - now;
-
-            if (difference <= 0) {
-                document.getElementById("days").textContent = "00";
-                document.getElementById("hours").textContent = "00";
-                document.getElementById("minutes").textContent = "00";
-                document.getElementById("seconds").textContent = "00";
-
-                return;
-            }
-
-            const days = Math.floor(
-                difference / (1000 * 60 * 60 * 24)
-            );
-
-            const hours = Math.floor(
-                (difference / (1000 * 60 * 60)) % 24
-            );
-
-            const minutes = Math.floor(
-                (difference / (1000 * 60)) % 60
-            );
-
-            const seconds = Math.floor(
-                (difference / 1000) % 60
-            );
-
-            document.getElementById("days").textContent =
-                String(days).padStart(2, "0");
-
-            document.getElementById("hours").textContent =
-                String(hours).padStart(2, "0");
-
-            document.getElementById("minutes").textContent =
-                String(minutes).padStart(2, "0");
-
-            document.getElementById("seconds").textContent =
-                String(seconds).padStart(2, "0");
-        }
-
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-
-
-        // POKAZYWANIE ZDJĘCIA
-
-        function showPhoto() {
-
+        function siema() {
             const photo = document.getElementById("photo");
+            const caption = document.getElementById("caption");
 
             if (photo.style.display === "block") {
                 photo.style.display = "none";
+                caption.style.display = "none";
             } else {
                 photo.style.display = "block";
+                caption.style.display = "block";
             }
         }
-
     </script>
 
 </body>
 </html>
+```
