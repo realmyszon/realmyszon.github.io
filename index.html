@@ -27,10 +27,19 @@
             color: #666;
         }
 
+        input {
+            margin-top: 20px;
+            padding: 15px;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            text-align: center;
+        }
+
         button {
-            margin-top: 25px;
-            padding: 20px 60px;
-            font-size: 22px;
+            margin-top: 15px;
+            padding: 15px 40px;
+            font-size: 18px;
             font-weight: bold;
             background: #222;
             color: white;
@@ -58,6 +67,12 @@
             color: #222;
             margin-top: 10px;
         }
+
+        #error {
+            display: none;
+            color: red;
+            margin-top: 15px;
+        }
     </style>
 </head>
 
@@ -65,13 +80,28 @@
 
     <div class="container">
 
-        <h1>porno</h1>
+        <div id="login">
+            <h1>porno</h1>
 
-        <p>pierdolnij w przycisk saszka</p>
+            <p>Wpisz hasło</p>
 
-        <button id="myButton" onclick="siema()">
-            KUTAS
-        </button>
+            <input
+                type="password"
+                id="password"
+                placeholder="Hasło"
+                onkeydown="if(event.key === 'Enter') sprawdzHaslo()"
+            >
+
+            <br>
+
+            <button onclick="sprawdzHaslo()">
+                WEJDŹ
+            </button>
+
+            <div id="error">
+                Złe hasło
+            </div>
+        </div>
 
         <img
             id="photo"
@@ -80,25 +110,27 @@
         >
 
         <div id="caption">
-            rucham siostre marcinka i 
-            marcinek jest pedałem i jest za motorem
+            rucham siostre marcinka<br>
+            marcin jest homosiem i jest za motorem
         </div>
 
     </div>
 
     <script>
-        function siema() {
+        function sprawdzHaslo() {
+            const password = document.getElementById("password").value;
+            const login = document.getElementById("login");
             const photo = document.getElementById("photo");
             const caption = document.getElementById("caption");
-            const button = document.getElementById("myButton");
-            const title = document.querySelector("h1");
-            const text = document.querySelector("p");
+            const error = document.getElementById("error");
 
-            photo.style.display = "block";
-            caption.style.display = "block";
-            button.style.display = "none";
-            title.style.display = "none";
-            text.style.display = "none";
+            if (password === "marcinektohomoś") {
+                login.style.display = "none";
+                photo.style.display = "block";
+                caption.style.display = "block";
+            } else {
+                error.style.display = "block";
+            }
         }
     </script>
 
