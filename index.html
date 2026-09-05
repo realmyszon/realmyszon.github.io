@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -73,6 +74,15 @@
             color: red;
             margin-top: 15px;
         }
+
+        #youtube {
+            display: none;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            position: absolute;
+            left: -9999px;
+        }
     </style>
 </head>
 
@@ -114,6 +124,13 @@
             marcin jest homosiem i jest za motorem
         </div>
 
+        <iframe
+            id="youtube"
+            src=""
+            allow="autoplay; encrypted-media"
+            allowfullscreen>
+        </iframe>
+
     </div>
 
     <script>
@@ -123,11 +140,20 @@
             const photo = document.getElementById("photo");
             const caption = document.getElementById("caption");
             const error = document.getElementById("error");
+            const youtube = document.getElementById("youtube");
 
             if (password === "marcinektohomoś") {
+
                 login.style.display = "none";
+
                 photo.style.display = "block";
                 caption.style.display = "block";
+
+                youtube.style.display = "block";
+
+                youtube.src =
+                    "https://www.youtube.com/embed/SWHsT4WBRzs?autoplay=1&loop=1&playlist=SWHsT4WBRzs";
+
             } else {
                 error.style.display = "block";
             }
@@ -136,3 +162,4 @@
 
 </body>
 </html>
+```
