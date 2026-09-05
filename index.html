@@ -69,7 +69,7 @@
 
         <p>pierdolnij w przycisk saszka</p>
 
-        <button onclick="siema()">
+        <button id="myButton" onclick="siema()">
             KUTAS
         </button>
 
@@ -90,13 +90,16 @@
         function siema() {
             const photo = document.getElementById("photo");
             const caption = document.getElementById("caption");
+            const button = document.getElementById("myButton");
 
             if (photo.style.display === "block") {
                 photo.style.display = "none";
                 caption.style.display = "none";
+                button.style.display = "inline-block";
             } else {
                 photo.style.display = "block";
                 caption.style.display = "block";
+                button.style.display = "none";
             }
         }
     </script>
