@@ -58,6 +58,7 @@
             max-width: 90%;
             margin: 30px auto 10px;
             border-radius: 8px;
+            cursor: pointer; /* Zmienia kursor na łapkę, żeby było widać, że można kliknąć */
         }
 
         #caption {
@@ -116,6 +117,7 @@
             id="photo"
             src="https://i.ibb.co/q3QSRGgS/IMG-3859.jpg"
             alt="Zdjęcie"
+            onclick="uruchomPiosenke()"
         >
 
         <div id="caption">
@@ -136,25 +138,23 @@
             const password = document.getElementById("password").value;
             const login = document.getElementById("login");
             const photo = document.getElementById("photo");
-            const caption = document.getElementById("caption");
             const error = document.getElementById("error");
-            const youtube = document.getElementById("youtube");
 
             if (password === "jestemgejem") {
-
                 login.style.display = "none";
-
-                photo.style.display = "block";
-                caption.style.display = "block";
-
-                youtube.style.display = "block";
-
-                youtube.src =
-                    "https://www.youtube.com/embed/2tel3g-3x-s?autoplay=1&playsinline=1&loop=1&playlist=2tel3g-3x-s";
-
+                photo.style.display = "block"; // Pokazuje zdjęcie po poprawnym hasle
             } else {
                 error.style.display = "block";
             }
+        }
+
+        function uruchomPiosenke() {
+            const caption = document.getElementById("caption");
+            const youtube = document.getElementById("youtube");
+
+            caption.style.display = "block";
+            youtube.style.display = "block";
+            youtube.src = "https://www.youtube.com/embed/2tel3g-3x-s?autoplay=1&playsinline=1&loop=1&playlist=2tel3g-3x-s";
         }
     </script>
 
