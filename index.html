@@ -58,7 +58,7 @@
             max-width: 90%;
             margin: 30px auto 10px;
             border-radius: 8px;
-            cursor: pointer; /* Zmienia kursor na łapkę, żeby było widać, że można kliknąć */
+            cursor: pointer;
         }
 
         #caption {
@@ -75,13 +75,9 @@
             margin-top: 15px;
         }
 
-        #youtube {
+        /* Ukrywamy kontener odtwarzacza w tle */
+        #player-container {
             display: none;
-            width: 1px;
-            height: 1px;
-            opacity: 0;
-            position: absolute;
-            left: -9999px;
         }
     </style>
 </head>
@@ -124,16 +120,34 @@
             rucham ci mame<br>
         </div>
 
-        <iframe
-            id="youtube"
-            src=""
-            allow="autoplay; encrypted-media"
-            allowfullscreen>
-        </iframe>
+        <!-- Ukryty element, w którym YouTube utworzy odtwarzacz -->
+        <div id="player-container">
+            <div id="youtube-player"></div>
+        </div>
 
     </div>
 
+    <!-- Skrypt YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
     <script>
+        let player;
+
+        // Ta funkcja uruchamia się automatycznie po załadowaniu biblioteki YouTube API
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0',
+                width: '0',
+                videoId: '2tel3g-3x-s',
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': '2tel3g-3x-s'
+                }
+            });
+        }
+
         function sprawdzHaslo() {
             const password = document.getElementById("password").value;
             const login = document.getElementById("login");
@@ -142,7 +156,7 @@
 
             if (password === "jestemgejem") {
                 login.style.display = "none";
-                photo.style.display = "block"; // Pokazuje zdjęcie po poprawnym hasle
+                photo.style.display = "block";
             } else {
                 error.style.display = "block";
             }
@@ -150,11 +164,13 @@
 
         function uruchomPiosenke() {
             const caption = document.getElementById("caption");
-            const youtube = document.getElementById("youtube");
 
             caption.style.display = "block";
-            youtube.style.display = "block";
-            youtube.src = "https://www.youtube.com/embed/2tel3g-3x-s?autoplay=1&playsinline=1&loop=1&playlist=2tel3g-3x-s";
+
+            // Uruchamia odtwarzacz w tle dzięki oficjalnemu API
+            if (player && typeof player.playVideo === 'function') {
+                player.playVideo();
+            }
         }
     </script>
 
